@@ -1,0 +1,101 @@
+@import 'datatables.net-dt';
+@import 'datatables.net-responsive-dt';
+@import 'datatables.net-buttons-dt';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply bg-slate-50;
+    }
+
+    [type="text"],
+    [type="email"],
+    [type="url"],
+    [type="password"],
+    [type="number"],
+    [type="date"],
+    [type="datetime-local"],
+    [type="month"],
+    [type="search"],
+    [type="tel"],
+    [type="time"],
+    [type="week"],
+    [multiple],
+    textarea,
+    select {
+        @apply w-full border-gray-300 rounded shadow-sm focus:border-gray-400 focus:ring-gray-400;
+  }
+
+  tbody > tr:nth-child(odd) {
+    @apply bg-gray-100;
+  }
+
+  #datatable_wrapper {
+    //padding: 10px;
+    //padding-bottom: 5px;
+  }
+
+  #datatable:hover {
+    cursor: pointer;
+  }
+
+  #datatable_length {
+    //padding-left: 5px;
+  }
+
+  #datatable_filter  {
+    //padding-right: 10px;
+  }
+
+  #datatable_info { 
+    //margin-left: 10px; 
+  }
+
+  #audit-datatable tfoot {
+    position: absolute;
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    grid-template-cols: 1fr 1fr 1fr 1fr;
+    top: -45px;
+    width: 100%;
+    border: 0px;
+    cursor: default;
+  }
+  
+  #audit-datatable tbody {
+    cursor: pointer;
+  }
+
+  #audit-datatable tfoot th {
+    padding: 0px;
+  }
+
+  #audit-datatable tfoot input {
+    padding: 4px 10px;
+    margin: 0px 5px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 2px;
+  }
+
+  #audit-datatable tfoot input::placeholder {
+    color: rgba(0, 0, 0, 0.3);
+    font-size: 0.7rem;
+  }
+
+  #audit-datatable > tfoot > tr > th, table.dataTable > tfoot > tr > td {
+    border-top: 0px;
+  }
+
+  #audit-datatable > tbody tr:last-child td {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  }
+
+  @media only screen and (max-width: 1279px) {
+    #audit-datatable tfoot {
+      top: -80px;
+    }
+  }
+}
