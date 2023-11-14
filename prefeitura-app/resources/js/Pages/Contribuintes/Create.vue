@@ -1,7 +1,7 @@
 <template>
     <Head title="Contribuintes - Cadastro" />
 
-    <section class="container mt-8 mx-auto px-40 bg-red-600">
+    <section class="container mt-8 mx-auto px-40">
         <form @submit.prevent="submit" class="sm:mx-10 md:mx-20 max-xl:mx-10 pt-4 px-10 pb-12 rounded shadow-md bg-gray-100">
             <h1 class="text-center mt-2 mb-8 underline underline-offset-4 decoration-slate-400 text-slate-800">Cadastrar Contribuinte</h1>
             <div class="flex flex-col justify-center gap-x-4">
