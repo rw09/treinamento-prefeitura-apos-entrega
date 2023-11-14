@@ -2,7 +2,7 @@
     <Head title="Contribuinte - Detalhes" />
 
         <section class="mx-5 md:mx-30 lg:mx-40 xl:mx-80 space-y-4 shadow-md pb-8 mb-6 rounded-md border">
-            <nav class="flex bg-gray-200 mb-6 justify-between">
+            <nav class="flex bg-gray-200 mb-6">
                 <div class="flex">
                     <label for="opcao-contribuinte" class="py-3.5 px-4 cursor-pointer hover:bg-white hover:rounded-tl" v-bind:class="{'bg-gray-50 rounded-tl font-semibold' : opcao === 'contribuinte'}">
                         <input type="radio" value="contribuinte" id="opcao-contribuinte" name="opcao" v-model="opcao" class="hidden">Contribuinte
@@ -12,7 +12,7 @@
                             Protocolos
                     </label>
                 </div>
-                <div v-if="opcao === 'contribuinte'" class="flex space-x-1 justify-center px-3 items-center">
+                <div v-if="opcao === 'contribuinte'" class="flex space-x-1 w-full justify-end pr-3 items-center rounded-tr bg-gradient-to-r from-gray-200 to-gray-50">
                     <Link class="p-1 text-white rounded bg-sky-600/90 hover:bg-blue-300" v-bind:href="route('contribuintes-edit', contribuinte.id)">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
                             <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
