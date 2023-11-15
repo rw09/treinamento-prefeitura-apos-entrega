@@ -45,7 +45,7 @@ class DepartamentoPolicy
      */
     public function delete(User $user, Departamento $departamento): bool
     {
-        return $user->perfil === 0;
+        return $user->perfil === 0 || $user->perfil === 1;
     }
 
     /**
