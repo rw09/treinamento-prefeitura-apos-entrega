@@ -7,8 +7,8 @@
                     <div>
                         <label for="contribuinte">Contribuinte:</label>
                         <select name="contribuinte" id="contribuinte" v-model="form.contribuinte_id" class="px-3 mt-1 py-1 w-full border rounded text-sm" required @change="form.validate('contribuinte_id')">
-                            <option v-if="props.contribuintes.length === 1" v-bind:value="props.contribuintes[0].id" :selected="props.contribuintes.length === 1">{{ props.contribuintes[0].cpf }} - {{ props.contribuintes[0].nome }}</option>
-                            <option v-else v-for="contribuinte in contribuintes" v-bind:value="contribuinte.id" :selected="props.contribuintes.length === 1">{{ contribuinte.cpf }} - {{ contribuinte.nome }}</option>
+                            <option v-if="props.contribuintes.length === 1" v-bind:value="props.contribuintes[0].id" :selected="props.contribuintes.length === 1">{{ props.contribuintes[0].cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4') }} - {{ props.contribuintes[0].nome }}</option>
+                            <option v-else v-for="contribuinte in contribuintes" v-bind:value="contribuinte.id" :selected="props.contribuintes.length === 1">{{ contribuinte.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4') }} - {{ contribuinte.nome }}</option>
                         </select>
                         <div v-if="form.errors.contribuinte_id" v-text="form.errors.contribuinte_id" class="text-red-400 text-xs mt-1"></div>
                         <div v-if="contribuintes.length === 0" class="text-red-400 text-xs mt-1">Nenhum contribuinte encontrado</div>
