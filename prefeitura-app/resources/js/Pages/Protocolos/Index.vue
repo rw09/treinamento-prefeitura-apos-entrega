@@ -1,6 +1,6 @@
 <template>
     <Head title="Protocolos - Listagem" />
-
+<h1>{{ page.props.flash.message }}</h1>
     <section class="container my-6 mx-auto text-xs">
         <section class="flex justify-between mb-1">
             <div class="flex items-center py-2">
@@ -51,8 +51,8 @@
 </template>
 
 <script setup>
-import { router, usePage } from '@inertiajs/vue3';
-import { ref, onMounted } from 'vue';
+import { router, useForm, usePage } from '@inertiajs/vue3';
+import { ref, onMounted, handleError } from 'vue';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 
@@ -121,10 +121,11 @@ DataTable.use(DataTablesCore);
                 // Create input element
                 let input = document.createElement('input');
                 input.placeholder = title;
+                input.type = "search";
                 column.footer().replaceChildren(input);
  
                 // Event listener for user input
-                input.addEventListener('keyup', (e) => {
+                input.addEventListener('input', (e) => {
                     //if (e.key === 'Enter' || e.keyCode === 13) {
                         if (column.search() !== this.value) {
                             column.search(input.value).draw();
@@ -136,6 +137,10 @@ DataTable.use(DataTablesCore);
         }
     };
 
+
+    const limparFiltro = async () => {
+        alert('limpar')
+    }
 
     let linhaSelecionada = ref(false);
 
@@ -185,13 +190,18 @@ DataTable.use(DataTablesCore);
                 cancelButtonText: 'Cancelar!',
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        router.delete(route('protocolos-destroy', row.id));
-                        Swal.fire({
-                        timer: 2500,
-                        title: 'Deletado!',
-                        text: 'Protocolo excluído com sucesso.',
-                        icon: 'success',
-                    })
+                        router.delete(route('protocolos-destroy', row.id), {
+                        onSuccess: () => {[
+                            Swal.fire({
+                                title: 'Deletado!',
+                                html: page.props.flash.message,
+                                timer: 2500,
+                                text: 'Protocolo excluído com sucesso.',
+                                icon: 'success',
+                            }),
+                            page.props.flash.message = null  
+                        ]}
+                    });
                 }
                 linhaSelecionada.value = false;
             })

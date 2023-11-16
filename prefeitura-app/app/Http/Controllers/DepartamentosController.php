@@ -97,11 +97,15 @@ class DepartamentosController extends Controller
         {
             $departamento->delete();
 
-            return redirect()->back();
+            //return redirect()->back();
+            return to_route('departamentos-index');
         }
-        else
+        else //ver depois
         {
-            return redirect('/');
+            return back()->withErrors([
+                'icon' => 'error',
+                'message' => 'Não tem permissão para Excluir o Departamento',
+            ]);
         }
     }
 

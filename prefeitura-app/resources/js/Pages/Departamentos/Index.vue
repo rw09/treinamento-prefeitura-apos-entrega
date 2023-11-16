@@ -51,7 +51,7 @@ DataTable.use(DataTablesCore);
 
     onMounted(function () {
         dt = table.value.dt;
-
+        
         if(page.props.flash.message) {
             Swal.fire({
                 title: 'Sucesso!',
@@ -132,14 +132,25 @@ const columns = [
                 cancelButtonText: 'Cancelar!',
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        router.delete(route('departamentos-destroy', row.id));
-                        Swal.fire({
-                        timer: 2500,
-                        title: 'Deletado!',
-                        text: 'Departamento excluído com sucesso.',
-                        icon: 'success',
-                    })
-                }
+                        router.delete(route('departamentos-destroy', row.id), {
+                            onSuccess: () => {[
+                                Swal.fire({
+                                    title: 'Deletado!',
+                                    html: 'Departamento excluído com sucesso.',
+                                    timer: 2500,
+                                    icon: 'success',
+                                }),
+                            ]},
+                            onError: (errors) => {[
+                                Swal.fire({
+                                    title: 'Erro!',
+                                    html: errors.message,
+                                    timer: 2500,
+                                    icon: errors.icon,
+                                }),
+                            ]}
+                        });
+                    }
                 linhaSelecionada.value = false;
             })
         }
