@@ -391,7 +391,42 @@ import Swal from 'sweetalert2';
     }        
 
     let excluirProtocolo = (protocolo) => {
-        alert('Protocolo: ' + protocolo.descricao + '\n será excluído quando a função for implementada :D')
+        //alert('Protocolo: ' + protocolo.descricao + '\n será excluído quando a função for implementada :D')
+        Swal.fire({
+            title: 'Confirma exclusão desse Protocolo?',
+            html: "<b>ID:</b> " + protocolo.id + '<br>' + "<b>Descrição:</b> " + protocolo.descricao + "<br><b>Solicitante:</b> " + protocolo.contribuinte_id + " - " + protocolo.contribuinte.nome 
+            + "<br><b>Departamento:</b> " + protocolo.departamento_id + " - " + protocolo.departamento.nome
+            + "<br><b>Data:</b> " + new Date(protocolo.created_at).toLocaleString('pt-BR') + "<br><b>Prazo:</b> " + protocolo.prazo + " dias"
+            + "<br><b>Situação:</b> " + (protocolo.situacao == 1 ? 'Concluído' : 'Pendente' ),
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, deletar!',
+            cancelButtonText: 'Cancelar!',
+        })
+        .then((result) => {
+            if (result.isConfirmed) {
+                router.delete(route('protocolos-destroy', protocolo.id), {
+                    onSuccess: () => {[
+                        Swal.fire({
+                            title: 'Deletado!',
+                            html: 'Protocolo excluído com sucesso.',
+                            timer: 2500,
+                            icon: 'success',
+                        }),
+                    ]},
+                    onError: () => {[
+                        Swal.fire({
+                            title: 'Erro!',
+                            html: 'Não foi possível deletar o Protocolo',
+                            timer: 2500,
+                            icon: 'error',
+                        }),
+                    ]}
+                });
+            }
+        })
     }
 
 </script>

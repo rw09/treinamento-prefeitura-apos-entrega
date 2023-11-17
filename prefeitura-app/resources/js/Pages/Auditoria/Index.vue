@@ -48,24 +48,12 @@ import 'datatables.net-select';
 
 DataTable.use(DataTablesCore);
 
-    let page = usePage();
-
     let dt;
     const table = ref();
 
 
     onMounted(function () {
         dt = table.value.dt;
-
-        if(page.props.flash.message) {
-            Swal.fire({
-                title: 'Sucesso!',
-                html: page.props.flash.message,
-                timer: 2500,
-                icon: 'success',
-            })  
-            page.props.flash.message = null
-        } 
     });
 
     const columns = [
@@ -102,10 +90,11 @@ DataTable.use(DataTablesCore);
                 // Create input element
                 let input = document.createElement('input');
                 input.placeholder = title;
+                input.type= "search";
                 column.footer().replaceChildren(input);
  
                 // Event listener for user input
-                input.addEventListener('keyup', () => {
+                input.addEventListener('input', () => {
                     if (column.search() !== this.value) {
                         column.search(input.value).draw();
                     }

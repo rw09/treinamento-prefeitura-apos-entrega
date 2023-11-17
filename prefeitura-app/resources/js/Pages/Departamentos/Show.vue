@@ -232,6 +232,38 @@ import { usePage } from '@inertiajs/vue3';
     }
 
     let excluirDepartamento = (departamento) => {
-        alert('Departamento: ' + departamento.nome + ' será excluída(o) quando a função for implementada :D')
+        //alert('Departamento: ' + departamento.nome + ' será excluída(o) quando a função for implementada :D')
+        Swal.fire({
+            title: 'Confirma exclusão desse Departamento?',
+            html: "<b>ID:</b> " + departamento.id + '<br>' + '<b>Nome:</b> ' + departamento.nome,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, deletar!',
+            cancelButtonText: 'Cancelar!',
+        })
+        .then((result) => {
+            if (result.isConfirmed) {
+                router.delete(route('departamentos-destroy', departamento.id), {
+                    onSuccess: () => {[
+                        Swal.fire({
+                            title: 'Deletado!',
+                            html: 'Departamento excluído com sucesso.',
+                            timer: 2500,
+                            icon: 'success',
+                        }),
+                    ]},
+                    onError: () => {[
+                        Swal.fire({
+                            title: 'Erro!',
+                            html: 'Não foi possível deletar o Departamento',
+                            timer: 2500,
+                            icon: 'error',
+                        }),
+                    ]}
+                });
+            }
+        })
     }
 </script>

@@ -1,6 +1,6 @@
 <template>
     <Head title="Protocolos - Listagem" />
-<h1>{{ page.props.flash.message }}</h1>
+    
     <section class="container my-6 mx-auto text-xs">
         <section class="flex justify-between mb-1">
             <div class="flex items-center py-2">
@@ -52,7 +52,7 @@
 
 <script setup>
 import { router, useForm, usePage } from '@inertiajs/vue3';
-import { ref, onMounted, handleError } from 'vue';
+import { ref, onMounted } from 'vue';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 
@@ -137,11 +137,6 @@ DataTable.use(DataTablesCore);
         }
     };
 
-
-    const limparFiltro = async () => {
-        alert('limpar')
-    }
-
     let linhaSelecionada = ref(false);
 
     let mostrarBotoes = () => {
@@ -179,27 +174,34 @@ DataTable.use(DataTablesCore);
             Swal.fire({
                 title: 'Confirma exclusão desse Protocolo?',
                 html: "<b>ID:</b> " + row.id + '<br>' + "<b>Descrição:</b> " + row.descricao + "<br><b>Solicitante:</b> " + row.contribuinte_id + " - " + row.contribuinte.nome 
-            + "<br><b>Departamento:</b> " + row.departamento_id + " - " + row.departamento.nome
-            + "<br><b>Data:</b> " + new Date(row.created_at).toLocaleString('pt-BR') + "<br><b>Prazo:</b> " + row.prazo + " dias"
-            + "<br><b>Situação:</b> " + (row.situacao == 1 ? 'Concluído' : 'Pendente' ),
+                + "<br><b>Departamento:</b> " + row.departamento_id + " - " + row.departamento.nome
+                + "<br><b>Data:</b> " + new Date(row.created_at).toLocaleString('pt-BR') + "<br><b>Prazo:</b> " + row.prazo + " dias"
+                + "<br><b>Situação:</b> " + (row.situacao == 1 ? 'Concluído' : 'Pendente' ),
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Sim, deletar!',
                 cancelButtonText: 'Cancelar!',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        router.delete(route('protocolos-destroy', row.id), {
+            })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    router.delete(route('protocolos-destroy', row.id), {
                         onSuccess: () => {[
                             Swal.fire({
                                 title: 'Deletado!',
-                                html: page.props.flash.message,
+                                html: 'Protocolo excluído com sucesso.',
                                 timer: 2500,
-                                text: 'Protocolo excluído com sucesso.',
                                 icon: 'success',
                             }),
-                            page.props.flash.message = null  
+                        ]},
+                        onError: () => {[
+                            Swal.fire({
+                                title: 'Erro!',
+                                html: 'Não foi possível deletar o Protocolo',
+                                timer: 2500,
+                                icon: 'error',
+                            }),
                         ]}
                     });
                 }

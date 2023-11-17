@@ -177,7 +177,7 @@ class ProtocolosController extends Controller
     {
         Protocolo::find($id)->delete();
 
-        return redirect()->back();
+        return to_route('protocolos-index');
     }
 
     public function addAcompanhamento(AcompanhamentoRequest $request) //usar notificação depois e passar pro AcompanhamentosController

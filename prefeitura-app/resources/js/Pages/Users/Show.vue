@@ -102,7 +102,7 @@
 </template>
 
 <script setup>
-import { useForm } from '@inertiajs/vue3';
+import { useForm, router } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import Swal from 'sweetalert2';
@@ -177,6 +177,38 @@ import Swal from 'sweetalert2';
     };
 
     let excluirUsuario = (user) => {
-        alert('Usuario: ' + user.name + ' será excluída(o) quando a função for implementada :D')
+        //alert('Usuario: ' + user.name + ' será excluída(o) quando a função for implementada :D')
+        Swal.fire({
+            title: 'Confirma exclusão desse Usuário?',
+            html: "<b>ID:</b> " + user.id + '<br>' + '<b>Nome:</b> ' + user.name + '<br>' + "<b>E-mail:</b> " + user.email + '<br><b>CPF:</b> ' + user.cpf + "<br><b>Perfil de Acesso:</b> " + (user.perfil === 0 ? "Administrador da TI" : (user.perfil === 1 ? "Administrador do Sistema" : "Operador")),
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, deletar!',
+            cancelButtonText: 'Cancelar!',
+        })
+        .then((result) => {
+            if (result.isConfirmed) {
+                router.delete(route('users-destroy', user.id), {
+                    onSuccess: () => {[
+                        Swal.fire({
+                            title: 'Deletado!',
+                            html: 'Usuário excluído com sucesso.',
+                            timer: 2500,
+                            icon: 'success',
+                        }),
+                    ]},
+                    onError: () => {[
+                        Swal.fire({
+                            title: 'Erro!',
+                            html: 'Não foi possível deletar o Usuário',
+                            timer: 2500,
+                            icon: 'error',
+                        }),
+                    ]}
+                });
+            }
+        })
     }
 </script>

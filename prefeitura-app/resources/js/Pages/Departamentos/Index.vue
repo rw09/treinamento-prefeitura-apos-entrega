@@ -63,7 +63,7 @@ DataTable.use(DataTablesCore);
         } 
     });
 
-const columns = [
+    const columns = [
         { data: 'id' },
         { data: 'nome' },
         { data: null, render: data => new Date(data.created_at).toLocaleString('pt-BR')},
@@ -130,27 +130,28 @@ const columns = [
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Sim, deletar!',
                 cancelButtonText: 'Cancelar!',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        router.delete(route('departamentos-destroy', row.id), {
-                            onSuccess: () => {[
-                                Swal.fire({
-                                    title: 'Deletado!',
-                                    html: 'Departamento excluído com sucesso.',
-                                    timer: 2500,
-                                    icon: 'success',
-                                }),
-                            ]},
-                            onError: (errors) => {[
-                                Swal.fire({
-                                    title: 'Erro!',
-                                    html: errors.message,
-                                    timer: 2500,
-                                    icon: errors.icon,
-                                }),
-                            ]}
-                        });
-                    }
+            })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    router.delete(route('departamentos-destroy', row.id), {
+                        onSuccess: () => {[
+                            Swal.fire({
+                                title: 'Deletado!',
+                                html: 'Departamento excluído com sucesso.',
+                                timer: 2500,
+                                icon: 'success',
+                            }),
+                        ]},
+                        onError: (errors) => {[
+                            Swal.fire({
+                                title: 'Erro!',
+                                html: errors.message,
+                                timer: 2500,
+                                icon: errors.icon,
+                            }),
+                        ]}
+                    });
+                }
                 linhaSelecionada.value = false;
             })
         }

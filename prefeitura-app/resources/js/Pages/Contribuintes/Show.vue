@@ -1,6 +1,6 @@
 <template>
     <Head title="Contribuinte - Detalhes" />
-
+    
         <section class="mx-5 md:mx-30 lg:mx-40 xl:mx-80 space-y-4 shadow-md pb-8 mb-6 rounded-md border">
             <nav class="flex bg-gray-200 mb-6">
                 <div class="flex">
@@ -109,12 +109,13 @@ import { ref, computed, watch, onMounted } from 'vue';
 import Swal from 'sweetalert2';
 
 
-    const opcao = ref(sessionStorage.getItem("opcao") === null ? 'contribuinte' : sessionStorage.getItem("opcao"));
+    const opcao = ref('contribuinte')
+    //const opcao = ref(sessionStorage.getItem("opcao") === null ? 'contribuinte' : sessionStorage.getItem("opcao"));
+    //watch(opcao, async () => {
+    //    sessionStorage.setItem('opcao', opcao.value);
+    //})
 
-    watch(opcao, async (newOpcao, oldOpcao) => {
-        sessionStorage.setItem('opcao', opcao.value);
-    })
-
+    
     // onMounted(function() {
     //     let radioContrib = document.getElementById("opcao-contribuinte")
 
@@ -135,7 +136,7 @@ import Swal from 'sweetalert2';
     
     const page = usePage();
 
-    let form = useForm({});
+    // let form = useForm({});
 
     const filtro = ref('')
 
@@ -159,21 +160,21 @@ import Swal from 'sweetalert2';
         
         Swal.fire({
             title: 'Confirma exclusão desse Protocolo?',
-                html: "<b>ID:</b> " + protocolo.id + '<br>' + "<b>Descrição:</b> " + protocolo.descricao
+            html: "<b>ID:</b> " + protocolo.id + '<br>' + "<b>Descrição:</b> " + protocolo.descricao
             + "<br><b>Departamento:</b> " + protocolo.departamento_id + " - " + protocolo.departamento.nome
             + "<br><b>Data:</b> " + new Date(protocolo.created_at).toLocaleString('pt-BR') + "<br><b>Prazo:</b> " + protocolo.prazo + " dias"
             + "<br><b>Situação:</b> " + (protocolo.situacao == 1 ? 'Concluído' : 'Pendente' ),
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sim, deletar!',
-                cancelButtonText: 'Cancelar!',
-                })
-            .then((result) => {
-                if (result.isConfirmed) {
-                    router.delete(route('protocolos-destroy', protocolo.id));
-                    Swal.fire({
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, deletar!',
+            cancelButtonText: 'Cancelar!',
+        })
+        .then((result) => {
+            if (result.isConfirmed) {
+                router.delete(route('protocolos-destroy', protocolo.id));
+                Swal.fire({
                     timer: 2500,
                     title: 'Deletado!',
                     text: 'Protocolo excluído com sucesso.',
@@ -184,6 +185,39 @@ import Swal from 'sweetalert2';
     }
 
     let excluirContribuinte = (contribuinte) => {
-        alert('Contribuinte: ' + contribuinte.nome + ' será excluída(o) quando a função for implementada :D')
+        //alert('Contribuinte: ' + contribuinte.nome + ' será excluída(o) quando a função for implementada :D')
+        Swal.fire({
+            title: 'Confirma exclusão desse Contribuinte?',
+            html: "<b>ID:</b> " + contribuinte.id + '<br>' + '<b>Nome:</b> ' + contribuinte.nome + '<br>' + '<b>CPF:</b> ' + contribuinte.cpf,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, deletar!',
+            cancelButtonText: 'Cancelar!',
+        })
+        .then((result) => {
+            if (result.isConfirmed) {
+                router.delete(route('contribuintes-destroy', contribuinte.id), {
+                    onSuccess: () => {[
+                        Swal.fire({
+                            title: 'Deletado!',
+                            html: 'Contribuinte excluído com sucesso.',
+                            timer: 2500,
+                            icon: 'success',
+                        }),
+                    ]},
+                    onError: () => {[
+                        Swal.fire({
+                            title: 'Erro!',
+                            html: 'Não foi possível deletar o Contribuinte',
+                            timer: 2500,
+                            icon: 'error',
+                        }),
+                    ]}
+                });
+            }
+        })
     }
+
 </script>

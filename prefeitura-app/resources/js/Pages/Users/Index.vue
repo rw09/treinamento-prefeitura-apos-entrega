@@ -134,17 +134,30 @@ DataTable.use(DataTablesCore);
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Sim, deletar!',
                 cancelButtonText: 'Cancelar!',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        router.delete(route('users-destroy', row.id));
-                        Swal.fire({
-                        timer: 2500,
-                        title: 'Deletado!',
-                        text: 'Usuário excluído com sucesso.',
-                        icon: 'success',
-                    })
-                }
-                linhaSelecionada.value = false;
+            })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    router.delete(route('users-destroy', row.id), {
+                        onSuccess: () => {[
+                            Swal.fire({
+                                timer: 2500,
+                                title: 'Deletado!',
+                                text: 'Usuário excluído com sucesso.',
+                                icon: 'success',
+                            })
+                        ]},
+                        onError: () => {[
+                            Swal.fire({
+                                title: 'Erro!',
+                                html: 'Não foi possível deletar o Usuário',
+                                timer: 2500,
+                                icon: 'error',
+                            }),
+                        ]}
+                    });
+   
+            }
+            linhaSelecionada.value = false;
             })
         } else {
             avisoSemLinhaSelecionada('Deletar')

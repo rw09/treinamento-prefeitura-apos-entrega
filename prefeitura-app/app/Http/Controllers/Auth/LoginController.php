@@ -32,6 +32,8 @@ class LoginController extends Controller
 
         return back()->withErrors([
             'cpf' => 'Dados incorretos, verifique CPF e senha',
+            'cpf.required' => 'Informe o CPF',
+            'password.required' => 'Informe a Senha'
         ]);
     }
 

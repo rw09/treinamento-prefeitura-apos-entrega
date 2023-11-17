@@ -1,6 +1,6 @@
 <template>
     <Head title="Contribuintes - Listagem" />
-    
+
     <section class="container my-6 mx-auto text-xs">
         <section class="flex justify-between mb-1">
             <div class="flex items-center py-2">
@@ -139,15 +139,27 @@ DataTable.use(DataTablesCore);
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Sim, deletar!',
                 cancelButtonText: 'Cancelar!',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        router.delete(route('contribuintes-destroy', row.id));
-                        Swal.fire({
-                        timer: 2500,
-                        title: 'Deletado!',
-                        text: 'Contribuinte excluído com sucesso.',
-                        icon: 'success',
-                    })
+            })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    router.delete(route('contribuintes-destroy', row.id), {
+                        onSuccess: () => {[
+                            Swal.fire({
+                                timer: 2500,
+                                title: 'Deletado!',
+                                html: 'Contribuinte excluído com sucesso.',
+                                icon: 'success',
+                            })
+                        ]},
+                        onError: () => {[
+                            Swal.fire({
+                                title: 'Erro!',
+                                html: 'Não foi possível deletar o Contribuinte',
+                                timer: 2500,
+                                icon: 'error',
+                            }),
+                        ]}
+                    });
                 }
                 linhaSelecionada.value = false;
             })

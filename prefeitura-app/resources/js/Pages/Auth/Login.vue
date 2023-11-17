@@ -10,12 +10,14 @@
                 <div class="flex flex-col">
                     <label for="cpf" class="text-xs">CPF:</label>
                     <input v-model="form.cpf" v-mask="['###.###.###-##']" type="text" name="cpf" id="cpf" class="px-3 mt-1 mb-4 py-1 w-full border rounded" required>
-                    <div v-if="form.errors.cpf" v-text="form.errors.cpf"></div>
+                    <!-- <div v-if="form.errors.cpf" v-text="form.errors.cpf"></div> -->
+                    <div v-if="form.errors.cpf" v-text="form.errors.cpf" class="text-red-400 text-xs mb-4"></div>
                 </div>
                 <div class="flex flex-col">
                     <label for="senha" class="text-xs">Senha:</label>
                     <input v-model="form.password" name="password" id="password" type="password" class="px-3 mt-1 mb-4 py-1 w-full border rounded" required>
-                    <div v-if="form.errors.password" v-text="form.errors.password"></div>
+                    <!-- <div v-if="form.errors.password" v-text="form.errors.password"></div> -->
+                    <div v-if="form.errors.password" v-text="form.errors.password" class="text-red-400 text-xs mb-4"></div>
                 </div>
                 <div class="flex justify-center">
                     <button type="submit" class="bg-sky-500/90 px-4 py-2 mt-2 w-full rounded  text-white hover:bg-blue-300">Entrar</button>
